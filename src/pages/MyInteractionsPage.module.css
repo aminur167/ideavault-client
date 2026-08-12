@@ -1,0 +1,29 @@
+.page { padding-bottom: 4rem; }
+.header { text-align: center; margin-bottom: 2.5rem; }
+.tabs { display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 2.5rem; }
+.tabBtn {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.65rem 1.5rem; border-radius: var(--radius-full);
+  font-size: 0.9rem; font-weight: 600;
+  border: 1px solid var(--border); background: var(--bg-glass);
+  color: var(--text-secondary); cursor: pointer; transition: var(--transition);
+}
+.tabBtn:hover { border-color: var(--primary-light); color: var(--text-primary); }
+.tabActive { background: var(--gradient-primary); color: #fff !important; border-color: transparent !important; box-shadow: 0 4px 15px rgba(124,58,237,0.3); }
+
+.interactionsList { display: flex; flex-direction: column; gap: 1.5rem; max-width: 900px; margin: 0 auto; }
+.interactionCard { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xl); overflow: hidden; }
+.ideaPreview { padding: 1.5rem; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.ideaInfo { flex: 1; }
+.ideaTitle { font-size: 1.1rem; font-weight: 700; margin: 0.5rem 0 0.35rem; }
+.ideaTitle a { color: var(--text-primary); text-decoration: none; }
+.ideaTitle a:hover { color: var(--primary-light); }
+.ideaDesc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.5rem; }
+.authorBy { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; }
+
+.commentsBox { padding: 1.25rem 1.5rem; background: var(--bg-glass); }
+.commentsBoxTitle { font-size: 0.85rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+.userCommentsList { display: flex; flex-direction: column; gap: 0.75rem; }
+.commentItem { padding: 0.85rem 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); border-left: 3px solid var(--primary); }
+.commentText { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; }
+.commentDate { font-size: 0.73rem; color: var(--text-muted); margin-top: 0.35rem; display: block; }
