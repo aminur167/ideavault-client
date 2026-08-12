@@ -1,0 +1,36 @@
+.page { padding-bottom: 4rem; }
+.header { text-align: center; margin-bottom: 2.5rem; }
+.filterCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex; flex-direction: column; gap: 1.25rem;
+}
+.searchWrap { position: relative; width: 100%; }
+.searchIcon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+.searchInput { padding-left: 2.75rem !important; padding-right: 2.5rem !important; font-size: 1rem !important; height: 48px; }
+.clearSearch { position: absolute; right: 0.85rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-muted); cursor: pointer; display: flex; }
+.filtersRow { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.filterGroup { position: relative; display: flex; align-items: center; }
+.filterIcon { position: absolute; left: 0.85rem; color: var(--text-muted); pointer-events: none; }
+.selectControl { padding-left: 2.5rem !important; min-width: 180px; height: 40px; font-size: 0.875rem !important; }
+.dateGroup { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.dateControl { height: 40px; font-size: 0.85rem !important; padding-left: 2.5rem !important; color-scheme: dark; }
+.chipsRow { display: flex; flex-wrap: wrap; gap: 0.4rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }
+.chip {
+  padding: 0.3rem 0.85rem; border-radius: var(--radius-full);
+  font-size: 0.8rem; font-weight: 500;
+  background: var(--bg-glass); border: 1px solid var(--border);
+  color: var(--text-secondary); cursor: pointer; transition: var(--transition);
+}
+.chip:hover { border-color: var(--primary-light); color: var(--text-primary); }
+.chipActive { background: var(--gradient-primary); color: #fff !important; border-color: transparent !important; font-weight: 600; }
+.resultsMeta { margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+.pagination { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-top: 3rem; }
+.pageInfo { font-size: 0.9rem; color: var(--text-secondary); font-weight: 500; }
+@media (max-width: 768px) {
+  .filtersRow { flex-direction: column; align-items: stretch; }
+  .selectControl, .dateGroup { width: 100%; }
+}
