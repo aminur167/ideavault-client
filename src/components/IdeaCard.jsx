@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Calendar, MessageSquare, User, Tag, ArrowRight, Bookmark } from 'lucide-react'
+import { Calendar, MessageSquare, Tag, ArrowRight, Bookmark } from 'lucide-react'
 import styles from './IdeaCard.module.css'
 
 const CATEGORY_COLORS = {
@@ -11,7 +11,7 @@ const CATEGORY_COLORS = {
 const IdeaCard = ({ idea, showBookmark = false, isBookmarked = false, onBookmark }) => {
   const {
     _id, title, shortDescription, category, tags = [],
-    authorName, authorPhoto, commentCount = 0, createdAt, imageURL, bookmarks = []
+    authorName, authorPhoto, commentCount = 0, createdAt, imageURL
   } = idea
 
   const categoryColor = CATEGORY_COLORS[category] || '#94a3b8'

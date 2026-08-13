@@ -65,7 +65,7 @@ const Navbar = () => {
                 end={link.to === '/'}
                 className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}
               >
-                {link.icon && link.icon}
+                {link.icon ? link.icon : null}
                 {link.label}
               </NavLink>
             </li>

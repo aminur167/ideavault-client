@@ -44,7 +44,7 @@ const IdeasPage = () => {
   }, [debouncedSearch, category, sort, setSearchParams])
 
   // Fetch ideas from server
-  const { data, isLoading, refetch } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['ideas', debouncedSearch, category, sort, startDate, endDate, page],
     queryFn: async () => {
       const res = await axiosInstance.get('/ideas', {

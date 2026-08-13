@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import axiosInstance from '../api/axiosInstance'
 import LoadingSpinner from '../components/LoadingSpinner'
-import { Edit, Trash2, Eye, Plus, AlertTriangle, Lightbulb, X, Tag } from 'lucide-react'
+import { Edit, Trash2, Eye, Plus, AlertTriangle, X } from 'lucide-react'
 import toast from 'react-hot-toast'
 import styles from './MyIdeasPage.module.css'
 
@@ -13,7 +13,6 @@ const MyIdeasPage = () => {
   const queryClient = useQueryClient()
   const [updateIdea, setUpdateIdea] = useState(null) // Idea object to update in modal
   const [deleteIdeaId, setDeleteIdeaId] = useState(null) // Idea ID to delete
-  const [tagInput, setTagInput] = useState('')
 
   // Fetch My Ideas
   const { data: ideas = [], isLoading } = useQuery({
@@ -45,18 +44,6 @@ const MyIdeasPage = () => {
 
   const handleUpdateChange = (e) => {
     setUpdateIdea(prev => ({ ...prev, [e.target.name]: e.target.value }))
-  }
-
-  const handleAddTag = () => {
-    const t = tagInput.trim()
-    if (t && !updateIdea.tags?.includes(t)) {
-      setUpdateIdea(p => ({ ...p, tags: [...(p.tags || []), t] }))
-      setTagInput('')
-    }
-  }
-
-  const handleRemoveTag = (tag) => {
-    setUpdateIdea(p => ({ ...p, tags: p.tags.filter(t => t !== tag) }))
   }
 
   const handleUpdateSubmit = (e) => {

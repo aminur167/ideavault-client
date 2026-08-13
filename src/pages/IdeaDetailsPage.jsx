@@ -6,7 +6,7 @@ import LoadingSpinner from '../components/LoadingSpinner'
 import { useAuth } from '../context/AuthContext'
 import {
   Calendar, MessageSquare, Tag, Bookmark, Edit, Trash2, Send,
-  ArrowLeft, Target, AlertTriangle, Lightbulb, DollarSign, User, Clock
+  ArrowLeft, Target, AlertTriangle, Lightbulb, DollarSign, Clock
 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import styles from './IdeaDetailsPage.module.css'
