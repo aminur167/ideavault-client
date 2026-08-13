@@ -1,41 +1,33 @@
-# IdeaVault – Startup Idea Sharing Platform 💡🚀
+# IdeaVault — Startup Idea Sharing Platform
 
-IdeaVault is a web-based platform where users can share innovative startup ideas, explore ideas posted by others, and engage through comments and community discussions.
+IdeaVault is a full-stack community platform where builders share startup ideas, gather feedback, and refine concepts through structured discussion.
 
-**Live Site URL**: [https://ideavault-app.vercel.app](https://ideavault-app.vercel.app)
+**Live site:** Add the deployed Vercel client URL here after deployment.
 
----
+## Features
 
-## 🌟 Key Features
+- Secure Firebase email/password and Google authentication with protected user areas.
+- Create, update, browse, search, filter, bookmark, and discuss startup ideas.
+- Trending ideas powered by MongoDB aggregation and community comment activity.
+- Personal workspace for profile management, submitted ideas, comments, and bookmarks.
+- Responsive dark/light interface with route-based titles, loading states, toast feedback, and a custom 404 page.
+- Profile-photo picker with Cloudinary image hosting, avoiding manual image URL entry.
 
-- **Startup Idea Exploration & Sharing**: Users can post detailed startup ideas with category tags, problem statements, proposed solutions, target audience, and estimated budget.
-- **Interactive Comment & Discussion System**: Engaged community members can comment on ideas, edit or delete their own comments in real-time with automatic comment counting.
-- **Search & Advanced Filtering**: Case-insensitive search by idea title using MongoDB `$regex`, filter by categories (Tech, AI, Health, Education, Finance, etc.), and filter by date range.
-- **Authentication & Security**: Complete Firebase integration supporting Email/Password and Google OAuth login with custom server-side JWT authentication and protected routes.
-- **Dark / Light Theme Toggle**: Seamless global theme toggle saved to local storage with glassmorphism design, vibrant gradients, and smooth micro-animations.
+## Technology
 
----
+- React, Vite, React Router, TanStack Query, Axios, Firebase, Cloudinary, Swiper, and Lucide.
+- Node.js, Express, MongoDB Atlas, Mongoose, JWT, and Firebase Admin verification.
 
-## 🛠️ Technology Stack
+## Run locally
 
-- **Client**: React 18, Vite, React Router v6, Axios, TanStack React Query, Framer Motion, Swiper.js, Lucide Icons, React Hot Toast
-- **Server**: Node.js, Express.js, MongoDB Atlas, Mongoose, JSON Web Tokens (JWT), CORS
-- **Hosting**: Vercel (Client SPA) & Render / Vercel (Server API)
-
----
-
-## 🚀 Getting Started Locally
-
-### Client
 ```bash
-cd client
 npm install
 npm run dev
 ```
 
-### Server
-```bash
-cd server
-npm install
-npm run dev
-```
+Create a `.env` file from `.env.example` and set the Firebase, Cloudinary, and API variables before starting.
+
+## Deployment
+
+Deploy the client to Vercel. The included `vercel.json` rewrites all routes to the SPA entry point, so refreshing a page such as `/profile` or `/ideas/:id` works correctly.
+"# ideavault-client" 
