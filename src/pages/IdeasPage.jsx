@@ -185,18 +185,6 @@ const IdeasPage = () => {
             )}
           </div>
 
-          {/* Category Chips */}
-          <div className={styles.chipsRow}>
-            {CATEGORIES.map(cat => (
-              <button
-                key={cat}
-                className={`${styles.chip} ${category === cat ? styles.chipActive : ''}`}
-                onClick={() => setCategory(cat)}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
         </div>
 
         {/* Results Info */}
