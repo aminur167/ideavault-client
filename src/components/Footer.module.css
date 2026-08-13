@@ -2,20 +2,20 @@
   position: relative;
   background: var(--bg-secondary);
   border-top: 1px solid var(--border);
-  padding: 4rem 0 2rem;
+  padding: 5rem 0 2rem;
   overflow: hidden;
 }
 .glow {
   position: absolute;
   top: -80px; left: 50%;
   transform: translateX(-50%);
-  width: 600px; height: 200px;
-  background: radial-gradient(ellipse, rgba(124, 58, 237, 0.12) 0%, transparent 70%);
+  width: 760px; height: 260px;
+  background: radial-gradient(ellipse, rgba(99, 102, 241, 0.18) 0%, transparent 70%);
   pointer-events: none;
 }
 .grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  grid-template-columns: 2.25fr 1fr 1fr 1.35fr;
   gap: 3rem;
   margin-bottom: 3rem;
 }
@@ -41,7 +41,12 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-.brandDesc { color: var(--text-muted); font-size: 0.875rem; line-height: 1.7; margin-bottom: 1.5rem; }
+.brandDesc { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.75; margin-bottom: 1.25rem; max-width: 340px; }
+.trustLine { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent); font-size: 0.78rem; font-weight: 600; }
+.socials { display: flex; gap: 0.55rem; margin-top: 1.35rem; }
+.socialBtn { width: 35px; height: 35px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--border); border-radius: 10px; color: var(--text-secondary); background: var(--bg-glass); font-size: 0.78rem; font-weight: 800; transition: var(--transition); }
+.socialBtn svg { width: 16px; height: 16px; }
+.socialBtn:hover { transform: translateY(-3px); color: #fff; border-color: var(--primary-light); background: var(--primary); box-shadow: 0 8px 20px rgba(124, 58, 237, 0.32); }
 .socials { display: flex; gap: 0.6rem; }
 .socialBtn {
   width: 36px; height: 36px;

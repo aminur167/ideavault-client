@@ -9,15 +9,15 @@
   position: relative; overflow: hidden;
 }
 .slideBg { position: absolute; inset: 0; opacity: 0.85; }
-.slideOverlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 60%, transparent 100%); }
+.slideOverlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(3,7,18,0.92) 0%, rgba(5,10,23,0.76) 42%, rgba(8,12,25,0.3) 77%, rgba(8,12,25,0.18) 100%); }
 .slideImg {
   position: absolute; inset: 0;
   background-size: cover; background-position: center;
-  mix-blend-mode: overlay; opacity: 0.4;
+  mix-blend-mode: luminosity; opacity: 0.66;
 }
 .slideContent {
   position: relative; z-index: 2;
-  max-width: 620px; animation: slideUp 0.8s ease;
+  max-width: 660px; animation: slideUp 0.8s ease;
 }
 .slideTag {
   display: inline-flex; align-items: center;
@@ -31,9 +31,9 @@
 }
 .slideTitle {
   font-family: var(--font-heading);
-  font-size: clamp(2rem, 5vw, 3.75rem);
+  font-size: clamp(2.35rem, 5vw, 4.25rem);
   font-weight: 900; color: #fff; line-height: 1.1;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.25rem; letter-spacing: -0.055em;
   text-shadow: 0 2px 20px rgba(0,0,0,0.3);
 }
 .slideSubtitle {
@@ -53,11 +53,13 @@
   border-bottom: 1px solid var(--border);
   padding: 2rem 0;
 }
-.statsGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.statsGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 .statItem {
   display: flex; align-items: center; gap: 1rem;
-  justify-content: center; padding: 0.5rem;
+  justify-content: center; padding: 0.75rem 1rem;
+  border-right: 1px solid var(--border);
 }
+.statItem:last-child { border-right: 0; }
 .statIcon {
   width: 44px; height: 44px;
   background: rgba(124,58,237,0.12);
@@ -169,11 +171,13 @@
   .categoriesGrid { grid-template-columns: repeat(3, 1fr); }
   .stepsGrid { grid-template-columns: 1fr; }
   .stepArrow { display: none; }
-  .statsGrid { grid-template-columns: repeat(2, 1fr); }
+  .statsGrid { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 640px) {
   .hero, .slide { height: 85vh; }
   .categoriesGrid { grid-template-columns: repeat(2, 1fr); }
   .ctaCard { padding: 2.5rem 1.5rem; }
-  .statsGrid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  .statsGrid { grid-template-columns: 1fr; gap: 0.25rem; }
+  .statItem { border-right: 0; border-bottom: 1px solid var(--border); }
+  .statItem:last-child { border-bottom: 0; }
 }

@@ -10,6 +10,9 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/effect-fade'
 import { Rocket, TrendingUp, Users, MessageSquare, Lightbulb, ArrowRight, Zap, Globe, Shield, ChevronRight } from 'lucide-react'
+import heroCollaboration from '../assets/hero-collaboration.jpg'
+import heroFeedback from '../assets/hero-feedback.jpg'
+import heroCommunity from '../assets/hero-community.jpg'
 import styles from './HomePage.module.css'
 
 const SLIDES = [
@@ -20,7 +23,7 @@ const SLIDES = [
     cta: 'Explore Ideas',
     href: '/ideas',
     gradient: 'linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%)',
-    image: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&q=80',
+    image: heroCollaboration,
   },
   {
     tag: 'Community Driven',
@@ -29,7 +32,7 @@ const SLIDES = [
     cta: 'Share Your Idea',
     href: '/add-idea',
     gradient: 'linear-gradient(135deg, #059669 0%, #0891b2 100%)',
-    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80',
+    image: heroFeedback,
   },
   {
     tag: 'Validate & Grow',
@@ -38,7 +41,7 @@ const SLIDES = [
     cta: 'Get Started',
     href: '/register',
     gradient: 'linear-gradient(135deg, #9333ea 0%, #ec4899 100%)',
-    image: 'https://images.unsplash.com/photo-1553484771-371a605b060b?w=600&q=80',
+    image: heroCommunity,
   },
 ]
 
@@ -57,18 +60,20 @@ const HOW_IT_WORKS = [
   { step: '03', icon: <Rocket size={28} />, title: 'Validate & Launch', desc: 'Use community insights to validate your idea and build with confidence.' },
 ]
 
-const STATS = [
-  { value: '10K+', label: 'Ideas Shared', icon: <Lightbulb size={22} /> },
-  { value: '50K+', label: 'Community Members', icon: <Users size={22} /> },
-  { value: '200K+', label: 'Comments & Feedback', icon: <MessageSquare size={22} /> },
-  { value: '95%', label: 'Satisfaction Rate', icon: <TrendingUp size={22} /> },
-]
-
 const HomePage = () => {
   const { data: trending = [], isLoading } = useQuery({
     queryKey: ['trending'],
     queryFn: () => axiosInstance.get('/ideas/trending').then(r => r.data),
   })
+  const { data: stats } = useQuery({
+    queryKey: ['platform-stats'],
+    queryFn: () => axiosInstance.get('/stats').then(r => r.data),
+  })
+  const platformStats = [
+    { value: stats?.ideaCount ?? '—', label: 'Ideas Shared', icon: <Lightbulb size={22} /> },
+    { value: stats?.creatorCount ?? '—', label: 'Community Members', icon: <Users size={22} /> },
+    { value: stats?.commentCount ?? '—', label: 'Comments & Feedback', icon: <MessageSquare size={22} /> },
+  ]
 
   return (
     <div className={styles.page}>
@@ -113,7 +118,7 @@ const HomePage = () => {
       <section className={styles.statsBar}>
         <div className="container">
           <div className={styles.statsGrid}>
-            {STATS.map((s, i) => (
+            {platformStats.map((s, i) => (
               <div key={i} className={styles.statItem}>
                 <div className={styles.statIcon}>{s.icon}</div>
                 <div>

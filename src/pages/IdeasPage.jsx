@@ -16,6 +16,7 @@ const IdeasPage = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '')
   const [category, setCategory] = useState(searchParams.get('category') || 'All')
+  const [sort, setSort] = useState(searchParams.get('sort') || 'newest')
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   const [page, setPage] = useState(1)
@@ -31,22 +32,23 @@ const IdeasPage = () => {
 
   useEffect(() => {
     setPage(1)
-  }, [debouncedSearch, category, startDate, endDate])
+  }, [debouncedSearch, category, sort, startDate, endDate])
 
   // Sync URL query params
   useEffect(() => {
     const params = {}
     if (debouncedSearch) params.search = debouncedSearch
     if (category !== 'All') params.category = category
+    if (sort !== 'newest') params.sort = sort
     setSearchParams(params)
-  }, [debouncedSearch, category, setSearchParams])
+  }, [debouncedSearch, category, sort, setSearchParams])
 
   // Fetch ideas from server
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ['ideas', debouncedSearch, category, startDate, endDate, page],
+    queryKey: ['ideas', debouncedSearch, category, sort, startDate, endDate, page],
     queryFn: async () => {
       const res = await axiosInstance.get('/ideas', {
-        params: { search: debouncedSearch, category, startDate, endDate, page, limit: 9 }
+        params: { search: debouncedSearch, category, sort, startDate, endDate, page, limit: 9 }
       })
       return res.data
     }
@@ -83,6 +85,7 @@ const IdeasPage = () => {
   const clearFilters = () => {
     setSearchTerm('')
     setCategory('All')
+    setSort('newest')
     setStartDate('')
     setEndDate('')
     setPage(1)
@@ -133,6 +136,21 @@ const IdeasPage = () => {
                 {CATEGORIES.map(cat => (
                   <option key={cat} value={cat}>{cat === 'All' ? 'All Categories' : cat}</option>
                 ))}
+              </select>
+            </div>
+
+            <div className={styles.filterGroup}>
+              <SlidersHorizontal size={15} className={styles.filterIcon} />
+              <select
+                id="ideas-sort-select"
+                aria-label="Sort ideas"
+                className={`form-control ${styles.selectControl}`}
+                value={sort}
+                onChange={e => setSort(e.target.value)}
+              >
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+                <option value="discussed">Most discussed</option>
               </select>
             </div>
 

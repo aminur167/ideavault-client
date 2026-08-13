@@ -3,9 +3,11 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signInWithRedirect,
   signOut,
   onAuthStateChanged,
   updateProfile,
+  sendPasswordResetEmail,
 } from 'firebase/auth';
 import { auth, googleProvider } from '../firebase/firebase.config';
 import axiosInstance from '../api/axiosInstance';
@@ -18,12 +20,10 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   // Fetch JWT from server and store it
-  const fetchAndStoreToken = async (firebaseUser) => {
+  const fetchAndStoreToken = async (firebaseUser, forceRefresh = false) => {
     try {
       const { data } = await axiosInstance.post('/auth/jwt', {
-        email: firebaseUser.email,
-        name: firebaseUser.displayName,
-        photo: firebaseUser.photoURL,
+        idToken: await firebaseUser.getIdToken(forceRefresh),
       });
       localStorage.setItem('ideavault_token', data.token);
     } catch {
@@ -45,9 +45,17 @@ export const AuthProvider = ({ children }) => {
   };
 
   const googleLogin = async () => {
-    const userCredential = await signInWithPopup(auth, googleProvider);
-    await fetchAndStoreToken(userCredential.user);
-    return userCredential;
+    try {
+      const userCredential = await signInWithPopup(auth, googleProvider);
+      await fetchAndStoreToken(userCredential.user);
+      return userCredential;
+    } catch (error) {
+      if (error.code === 'auth/popup-blocked') {
+        await signInWithRedirect(auth, googleProvider);
+        return null;
+      }
+      throw error;
+    }
   };
 
   const logout = async () => {
@@ -56,8 +64,12 @@ export const AuthProvider = ({ children }) => {
     toast.success('Logged out successfully');
   };
 
+  const resetPassword = (email) => sendPasswordResetEmail(auth, email);
+
   const updateUserProfile = async (name, photoURL) => {
     await updateProfile(auth.currentUser, { displayName: name, photoURL });
+    await axiosInstance.patch('/auth/profile', { name, photo: photoURL || '' });
+    await fetchAndStoreToken(auth.currentUser, true);
     setUser({ ...auth.currentUser, displayName: name, photoURL });
   };
 
@@ -73,7 +85,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, register, login, googleLogin, logout, updateUserProfile }}>
+    <AuthContext.Provider value={{ user, loading, register, login, googleLogin, logout, resetPassword, updateUserProfile }}>
       {children}
     </AuthContext.Provider>
   );
