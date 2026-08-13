@@ -13,7 +13,7 @@ import styles from './IdeaDetailsPage.module.css'
 
 const IdeaDetailsPage = () => {
   const { id } = useParams()
-  const { user } = useAuth()
+  const { user, ensureServerToken } = useAuth()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
 
@@ -34,44 +34,56 @@ const IdeaDetailsPage = () => {
   })
 
   // Fetch Comments
-  const { data: comments = [], isLoading: commentsLoading } = useQuery({
+  const { data: comments = [], isLoading: commentsLoading, refetch: refetchComments } = useQuery({
     queryKey: ['comments', id],
     queryFn: () => axiosInstance.get(`/comments/${id}`).then(r => r.data)
   })
 
   // Add Comment Mutation
   const addCommentMutation = useMutation({
-    mutationFn: (text) => axiosInstance.post('/comments', { ideaId: id, text }),
-    onSuccess: () => {
-      queryClient.invalidateQueries(['comments', id])
-      queryClient.invalidateQueries(['idea', id])
+    mutationFn: async (text) => {
+      await ensureServerToken()
+      return axiosInstance.post('/comments', { ideaId: id, text })
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['comments', id] })
+      await queryClient.invalidateQueries({ queryKey: ['idea', id] })
+      await refetchComments()
       setCommentText('')
       toast.success('Comment posted!')
     },
-    onError: () => toast.error('Failed to post comment')
+    onError: (error) => toast.error(error.response?.data?.message || error.message || 'Failed to post comment')
   })
 
   // Edit Comment Mutation
   const editCommentMutation = useMutation({
-    mutationFn: ({ commentId, text }) => axiosInstance.put(`/comments/${commentId}`, { text }),
-    onSuccess: () => {
-      queryClient.invalidateQueries(['comments', id])
+    mutationFn: async ({ commentId, text }) => {
+      await ensureServerToken()
+      return axiosInstance.put(`/comments/${commentId}`, { text })
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['comments', id] })
+      await refetchComments()
       setEditingCommentId(null)
       setEditText('')
       toast.success('Comment updated!')
     },
-    onError: () => toast.error('Failed to update comment')
+    onError: (error) => toast.error(error.response?.data?.message || error.message || 'Failed to update comment')
   })
 
   // Delete Comment Mutation
   const deleteCommentMutation = useMutation({
-    mutationFn: (commentId) => axiosInstance.delete(`/comments/${commentId}`),
-    onSuccess: () => {
-      queryClient.invalidateQueries(['comments', id])
-      queryClient.invalidateQueries(['idea', id])
+    mutationFn: async (commentId) => {
+      await ensureServerToken()
+      return axiosInstance.delete(`/comments/${commentId}`)
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['comments', id] })
+      await queryClient.invalidateQueries({ queryKey: ['idea', id] })
+      await refetchComments()
       toast.success('Comment deleted!')
     },
-    onError: () => toast.error('Failed to delete comment')
+    onError: (error) => toast.error(error.response?.data?.message || error.message || 'Failed to delete comment')
   })
 
   // Toggle Bookmark
@@ -260,7 +272,7 @@ const IdeaDetailsPage = () => {
                   <LoadingSpinner />
                 ) : comments.length > 0 ? (
                   comments.map(c => {
-                    const isOwner = user?.email === c.authorEmail
+                    const isOwner = user?.email?.toLowerCase() === c.authorEmail?.toLowerCase()
                     const isEditing = editingCommentId === c._id
 
                     return (
