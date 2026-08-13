@@ -2,7 +2,7 @@
 
 IdeaVault is a full-stack community platform where founders and learners can share startup concepts, discover emerging ideas, and refine them through constructive discussion.
 
-**Live site:** Add the deployed Vercel URL here after deployment.
+**Live site:** https://ideavault-client-inky.vercel.app
 
 ## Features
 
